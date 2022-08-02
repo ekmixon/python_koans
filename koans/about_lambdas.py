@@ -15,7 +15,7 @@ class AboutLambdas(Koan):
     # ------------------------------------------------------------------
 
     def make_order(self, order):
-        return lambda qty: str(qty) + " " + order + "s"
+        return lambda qty: f"{str(qty)} {order}s"
 
     def test_accessing_lambda_via_assignment(self):
         sausages = self.make_order('sausage')

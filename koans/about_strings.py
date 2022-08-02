@@ -34,9 +34,8 @@ class AboutStrings(Koan):
         self.assertEqual(__, string)
 
     def test_use_backslash_for_escaping_quotes_in_strings(self):
-        a = "He said, \"Don't\""
         b = 'He said, "Don\'t"'
-        self.assertEqual(__, (a == b))
+        self.assertEqual(__, b == "He said, \"Don't\"")
 
     def test_use_backslash_at_the_end_of_a_line_to_continue_onto_the_next_line(self):
         string = "It was the best of times,\n\
@@ -51,9 +50,8 @@ world!
         self.assertEqual(__, len(string))
 
     def test_triple_quoted_strings_need_less_escaping(self):
-        a = "Hello \"world\"."
         b = """Hello "world"."""
-        self.assertEqual(__, (a == b))
+        self.assertEqual(__, b == "Hello \"world\".")
 
     def test_escaping_quotes_at_the_end_of_triple_quoted_string(self):
         string = """Hello "world\""""
@@ -75,16 +73,12 @@ world!
         self.assertEqual(__, there)
 
     def test_plus_equals_will_append_to_end_of_string(self):
-        hi = "Hello, "
-        there = "world"
-        hi += there
+        hi = "Hello, " + "world"
         self.assertEqual(__, hi)
 
     def test_plus_equals_also_leaves_original_string_unmodified(self):
         original = "Hello, "
-        hi = original
-        there = "world"
-        hi += there
+        hi = original + "world"
         self.assertEqual(__, original)
 
     def test_most_strings_interpret_escape_characters(self):

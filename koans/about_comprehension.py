@@ -44,7 +44,7 @@ class AboutComprehension(Koan):
         self.assertEqual(__, len(comprehension))
 
     def test_creating_a_set_with_set_comprehension(self):
-        comprehension = { x for x in 'aabbbcccc'}
+        comprehension = set('aabbbcccc')
 
         self.assertEqual(__, comprehension)  # remember that set members are unique
 

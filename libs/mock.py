@@ -51,9 +51,7 @@ def _is_magic(name):
     return '__{0!s}__'.format(name[2:-2]) == name
 
 def _copy(value):
-    if type(value) in (dict, list, tuple, set):
-        return type(value)(value)
-    return value
+    return type(value)(value) if type(value) in (dict, list, tuple, set) else value
 
 
 class Mock(object):
@@ -109,7 +107,7 @@ class Mock(object):
             parent.method_calls.append((name, args, kwargs))
             if parent._parent is None:
                 break
-            name = parent._name + '.' + name
+            name = f'{parent._name}.{name}'
             parent = parent._parent
 
         ret_val = DEFAULT
@@ -138,9 +136,7 @@ class Mock(object):
             raise AttributeError(name)
 
         if name not in self._children:
-            wraps = None
-            if self._wraps is not None:
-                wraps = getattr(self._wraps, name)
+            wraps = getattr(self._wraps, name) if self._wraps is not None else None
             self._children[name] = Mock(parent=self, name=name, wraps=wraps)
 
         return self._children[name]

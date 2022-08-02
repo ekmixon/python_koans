@@ -53,7 +53,7 @@ class AboutInheritance(Koan):
 
     class BullDog(Dog):
         def bark(self):
-            return super().bark() + ", GRR"
+            return f"{super().bark()}, GRR"
             # Note, super() is much simpler to use in Python 3!
 
     def test_subclasses_can_invoke_parent_behavior_via_super(self):
@@ -64,7 +64,7 @@ class AboutInheritance(Koan):
 
     class GreatDane(Dog):
         def growl(self):
-            return super().bark() + ", GROWL"
+            return f"{super().bark()}, GROWL"
 
     def test_super_works_across_methods(self):
         george = self.GreatDane("George")

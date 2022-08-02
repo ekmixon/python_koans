@@ -57,25 +57,19 @@ class Sensei(MockableTestResult):
         MockableTestResult.addFailure(self, test, err)
 
     def sortFailures(self, testClassName):
-        table = list()
+        table = []
         for test, err in self.failures:
             if helper.cls_name(test) ==  testClassName:
-                m = re.search("(?<= line )\d+" ,err)
-                if m:
-                    tup = (int(m.group(0)), test, err)
+                if m := re.search("(?<= line )\d+", err):
+                    tup = int(m[0]), test, err
                     table.append(tup)
 
-        if table:
-            return sorted(table)
-        else:
-            return None
+        return sorted(table) if table else None
 
     def firstFailure(self):
         if not self.failures: return None
 
-        table = self.sortFailures(helper.cls_name(self.failures[0][0]))
-
-        if table:
+        if table := self.sortFailures(helper.cls_name(self.failures[0][0])):
             return (table[0][1], table[0][2])
         else:
             return None
@@ -125,11 +119,11 @@ class Sensei(MockableTestResult):
         count = 0
         for line in err.splitlines():
             m = re.search("^[^^ ].*$",line)
-            if m and m.group(0):
+            if m and m[0]:
                 count+=1
 
             if count>1:
-                error_text += ("  " + line.strip()).rstrip() + '\n'
+                error_text += f"  {line.strip()}".rstrip() + '\n'
         return error_text.strip('\n')
 
     def scrapeInterestingStackDump(self, err):
@@ -143,11 +137,11 @@ class Sensei(MockableTestResult):
         stack_text = ""
         for line in lines:
             m = re.search("^  File .*$",line)
-            if m and m.group(0):
+            if m and m[0]:
                 stack_text += '\n' + line
 
             m = re.search("^    \w(\w)+.*$",line)
-            if m and m.group(0):
+            if m and m[0]:
                 stack_text += sep + line
 
         lines = stack_text.splitlines()
@@ -155,7 +149,7 @@ class Sensei(MockableTestResult):
         stack_text = ""
         for line in lines:
             m = re.search("^.*[/\\\\]koans[/\\\\].*$",line)
-            if m and m.group(0):
+            if m and m[0]:
                 stack_text += line + '\n'
 
 
@@ -190,70 +184,63 @@ class Sensei(MockableTestResult):
     # metakoans Ruby Quiz (http://rubyquiz.com/quiz67.html) and
     # Edgecase's later permutation in the Ruby Koans
     def say_something_zenlike(self):
-        if self.failures:
-            turn = self.pass_count % 37
-
-            zenness = "";
-            if turn == 0:
-                zenness = "Beautiful is better than ugly."
-            elif turn == 1 or turn == 2:
-                zenness = "Explicit is better than implicit."
-            elif turn == 3 or turn == 4:
-                zenness = "Simple is better than complex."
-            elif turn == 5 or turn == 6:
-                zenness = "Complex is better than complicated."
-            elif turn == 7 or turn == 8:
-                zenness = "Flat is better than nested."
-            elif turn == 9 or turn == 10:
-                zenness = "Sparse is better than dense."
-            elif turn == 11 or turn == 12:
-                zenness = "Readability counts."
-            elif turn == 13 or turn == 14:
-                zenness = "Special cases aren't special enough to " \
-                          "break the rules."
-            elif turn == 15 or turn == 16:
-                zenness = "Although practicality beats purity."
-            elif turn == 17 or turn == 18:
-                zenness = "Errors should never pass silently."
-            elif turn == 19 or turn == 20:
-                zenness = "Unless explicitly silenced."
-            elif turn == 21 or turn == 22:
-                zenness = "In the face of ambiguity, refuse the " \
-                          "temptation to guess."
-            elif turn == 23 or turn == 24:
-                zenness = "There should be one-- and preferably only " \
-                          "one --obvious way to do it."
-            elif turn == 25 or turn == 26:
-                zenness = "Although that way may not be obvious at " \
-                          "first unless you're Dutch."
-            elif turn == 27 or turn == 28:
-                zenness = "Now is better than never."
-            elif turn == 29 or turn == 30:
-                zenness = "Although never is often better than right " \
-                          "now."
-            elif turn == 31 or turn == 32:
-                zenness = "If the implementation is hard to explain, " \
-                          "it's a bad idea."
-            elif turn == 33 or turn == 34:
-                zenness = "If the implementation is easy to explain, " \
-                          "it may be a good idea."
-            else:
-                zenness = "Namespaces are one honking great idea -- " \
-                          "let's do more of those!"
-            return "{0}{1}{2}{3}".format(Fore.CYAN, zenness, Fore.RESET, Style.NORMAL);
-        else:
+        if not self.failures:
             return "{0}Nobody ever expects the Spanish Inquisition." \
-                .format(Fore.CYAN)
+                    .format(Fore.CYAN)
 
-        # Hopefully this will never ever happen!
-        return "The temple is collapsing! Run!!!"
+        turn = self.pass_count % 37
+
+        zenness = "";
+        if turn == 0:
+            zenness = "Beautiful is better than ugly."
+        elif turn in [1, 2]:
+            zenness = "Explicit is better than implicit."
+        elif turn in [3, 4]:
+            zenness = "Simple is better than complex."
+        elif turn in [5, 6]:
+            zenness = "Complex is better than complicated."
+        elif turn in [7, 8]:
+            zenness = "Flat is better than nested."
+        elif turn in [9, 10]:
+            zenness = "Sparse is better than dense."
+        elif turn in [11, 12]:
+            zenness = "Readability counts."
+        elif turn in [13, 14]:
+            zenness = "Special cases aren't special enough to " \
+                          "break the rules."
+        elif turn in [15, 16]:
+            zenness = "Although practicality beats purity."
+        elif turn in [17, 18]:
+            zenness = "Errors should never pass silently."
+        elif turn in [19, 20]:
+            zenness = "Unless explicitly silenced."
+        elif turn in [21, 22]:
+            zenness = "In the face of ambiguity, refuse the " \
+                          "temptation to guess."
+        elif turn in [23, 24]:
+            zenness = "There should be one-- and preferably only " \
+                          "one --obvious way to do it."
+        elif turn in [25, 26]:
+            zenness = "Although that way may not be obvious at " \
+                          "first unless you're Dutch."
+        elif turn in [27, 28]:
+            zenness = "Now is better than never."
+        elif turn in [29, 30]:
+            zenness = "Although never is often better than right " \
+                          "now."
+        elif turn in [31, 32]:
+            zenness = "If the implementation is hard to explain, " \
+                          "it's a bad idea."
+        elif turn in [33, 34]:
+            zenness = "If the implementation is easy to explain, " \
+                          "it may be a good idea."
+        else:
+            zenness = "Namespaces are one honking great idea -- " \
+                          "let's do more of those!"
+        return "{0}{1}{2}{3}".format(Fore.CYAN, zenness, Fore.RESET, Style.NORMAL);
 
     def total_lessons(self):
-        all_lessons = self.filter_all_lessons()
-        if all_lessons:
-          return len(all_lessons)
-        else:
-          return 0
+        return len(all_lessons) if (all_lessons := self.filter_all_lessons()) else 0
 
     def total_koans(self):
         return self.tests.countTestCases()

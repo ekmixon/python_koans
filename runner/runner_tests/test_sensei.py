@@ -198,42 +198,42 @@ class TestSensei(unittest.TestCase):
         words = self.sensei.say_something_zenlike()
 
         m = re.search("Spanish Inquisition", words)
-        self.assertTrue(m and m.group(0))
+        self.assertTrue(m and m[0])
 
     def test_that_if_there_are_0_successes_it_will_say_the_first_zen_of_python_koans(self):
         self.sensei.pass_count = 0
         self.sensei.failures = Mock()
         words = self.sensei.say_something_zenlike()
         m = re.search("Beautiful is better than ugly", words)
-        self.assertTrue(m and m.group(0))
+        self.assertTrue(m and m[0])
 
     def test_that_if_there_is_1_success_it_will_say_the_second_zen_of_python_koans(self):
         self.sensei.pass_count = 1
         self.sensei.failures = Mock()
         words = self.sensei.say_something_zenlike()
         m = re.search("Explicit is better than implicit", words)
-        self.assertTrue(m and m.group(0))
+        self.assertTrue(m and m[0])
 
     def test_that_if_there_are_10_successes_it_will_say_the_sixth_zen_of_python_koans(self):
         self.sensei.pass_count = 10
         self.sensei.failures = Mock()
         words = self.sensei.say_something_zenlike()
         m = re.search("Sparse is better than dense", words)
-        self.assertTrue(m and m.group(0))
+        self.assertTrue(m and m[0])
 
     def test_that_if_there_are_36_successes_it_will_say_the_final_zen_of_python_koans(self):
         self.sensei.pass_count = 36
         self.sensei.failures = Mock()
         words = self.sensei.say_something_zenlike()
         m = re.search("Namespaces are one honking great idea", words)
-        self.assertTrue(m and m.group(0))
+        self.assertTrue(m and m[0])
 
     def test_that_if_there_are_37_successes_it_will_say_the_first_zen_of_python_koans_again(self):
         self.sensei.pass_count = 37
         self.sensei.failures = Mock()
         words = self.sensei.say_something_zenlike()
         m = re.search("Beautiful is better than ugly", words)
-        self.assertTrue(m and m.group(0))
+        self.assertTrue(m and m[0])
 
     def test_that_total_lessons_return_7_if_there_are_7_lessons(self):
         self.sensei.filter_all_lessons = Mock()

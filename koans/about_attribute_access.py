@@ -153,10 +153,10 @@ class AboutAttributeAccess(Koan):
         def __setattr__(self, attr_name, value):
             new_attr_name =  attr_name
 
-            if attr_name[-5:] == 'comic':
-                new_attr_name = "my_" + new_attr_name
-            elif attr_name[-3:] == 'pie':
-                new_attr_name = "a_" + new_attr_name
+            if new_attr_name[-5:] == 'comic':
+                new_attr_name = f"my_{new_attr_name}"
+            elif new_attr_name[-3:] == 'pie':
+                new_attr_name = f"a_{new_attr_name}"
 
             object.__setattr__(self, new_attr_name, value)
 
@@ -173,7 +173,7 @@ class AboutAttributeAccess(Koan):
         #
 
         prefix = '__'
-        self.assertEqual("The Laminator, issue #1", getattr(fanboy, prefix + '_comic'))
+        self.assertEqual("The Laminator, issue #1", getattr(fanboy, f'{prefix}_comic'))
 
     # ------------------------------------------------------------------
 
@@ -185,8 +185,8 @@ class AboutAttributeAccess(Koan):
         def __setattr__(self, attr_name, value):
             new_attr_name =  attr_name
 
-            if attr_name[0] != '_':
-                new_attr_name = "altered_" + new_attr_name
+            if new_attr_name[0] != '_':
+                new_attr_name = f"altered_{new_attr_name}"
 
             object.__setattr__(self, new_attr_name, value)
 

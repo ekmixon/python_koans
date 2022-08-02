@@ -72,7 +72,7 @@ class AboutClassAttributes(Koan):
 
         @classmethod
         def growl(cls):
-            return "classmethod growl, arg: cls=" + cls.__name__
+            return f"classmethod growl, arg: cls={cls.__name__}"
 
     def test_since_classes_are_objects_you_can_define_singleton_methods_on_them_too(self):
         self.assertRegex(self.Dog2.growl(), __)
@@ -132,7 +132,7 @@ class AboutClassAttributes(Koan):
     # ------------------------------------------------------------------
 
     class Dog4:
-        def a_class_method(cls):
+        def a_class_method(self):
             return 'dogs class method'
 
         def a_static_method():

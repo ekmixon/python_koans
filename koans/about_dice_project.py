@@ -30,7 +30,10 @@ class AboutDiceProject(Koan):
         self.assertTrue(isinstance(dice.values, list), "should be a list")
         self.assertEqual(5, len(dice.values))
         for value in dice.values:
-            self.assertTrue(value >= 1 and value <= 6, "value " + str(value) + " must be between 1 and 6")
+            self.assertTrue(
+                value >= 1 and value <= 6,
+                f"value {str(value)} must be between 1 and 6",
+            )
 
     def test_dice_values_do_not_change_unless_explicitly_rolled(self):
         dice = DiceSet()

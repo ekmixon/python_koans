@@ -13,12 +13,9 @@ from runner.koan import *
 class AboutGenerators(Koan):
 
     def test_generating_values_on_the_fly(self):
-        result = list()
-        bacon_generator = (n + ' bacon' for n in ['crunchy','veggie','danish'])
+        bacon_generator = (f'{n} bacon' for n in ['crunchy','veggie','danish'])
 
-        for bacon in bacon_generator:
-            result.append(bacon)
-
+        result = list(bacon_generator)
         self.assertEqual(__, result)
 
     def test_generators_are_different_to_list_comprehensions(self):
@@ -39,7 +36,7 @@ class AboutGenerators(Koan):
         # Generators are more memory friendly, but less versatile
 
     def test_generator_expressions_are_a_one_shot_deal(self):
-        dynamite = ('Boom!' for n in range(3))
+        dynamite = ('Boom!' for _ in range(3))
 
         attempt1 = list(dynamite)
         attempt2 = list(dynamite)
@@ -56,9 +53,7 @@ class AboutGenerators(Koan):
         yield 'jelly'
 
     def test_generator_method_will_yield_values_during_iteration(self):
-        result = list()
-        for item in self.simple_generator_method():
-            result.append(item)
+        result = list(self.simple_generator_method())
         self.assertEqual(__, result)
 
     def test_generators_can_be_manually_iterated_and_closed(self):
@@ -93,8 +88,7 @@ class AboutGenerators(Koan):
     # ------------------------------------------------------------------
 
     def coroutine(self):
-        result = yield
-        yield result
+        yield (yield)
 
     def test_generators_can_act_as_coroutines(self):
         generator = self.coroutine()

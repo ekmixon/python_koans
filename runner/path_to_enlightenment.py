@@ -34,8 +34,7 @@ def names_from_file(filename):
     of TestCases found inside (one per line).
     '''
     with io.open(filename, 'rt', encoding='utf8') as names_file:
-        for name in filter_koan_names(names_file):
-            yield name
+        yield from filter_koan_names(names_file)
     return
 
 

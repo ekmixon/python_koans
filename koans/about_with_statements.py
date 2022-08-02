@@ -30,9 +30,8 @@ class AboutWithStatements(Koan):
         try:
             file = open(file_name)
             try:
-                for line in file.readlines():
-                    match = re.search('e', line)
-                    if match:
+                for line in file:
+                    if match := re.search('e', line):
                         return line
             finally:
                 file.close()

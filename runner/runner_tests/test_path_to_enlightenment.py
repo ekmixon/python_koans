@@ -98,6 +98,6 @@ class TestKoansSuite(unittest.TestCase):
           'AboutNone',
           'AboutStrings',
           ]
-        received = sorted(set(test.__class__.__name__ for test in suite))
+        received = sorted({test.__class__.__name__ for test in suite})
         self.assertListEqual(expected, received)
         return

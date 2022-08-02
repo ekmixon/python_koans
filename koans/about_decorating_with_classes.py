@@ -7,10 +7,7 @@ import functools
 
 class AboutDecoratingWithClasses(Koan):
     def maximum(self, a, b):
-        if a>b:
-            return a
-        else:
-            return b
+        return a if a>b else b
 
     def test_partial_that_wrappers_no_args(self):
         """
@@ -42,15 +39,10 @@ class AboutDecoratingWithClasses(Koan):
             self.fn = fn
 
         def __call__(self, *args):
-            return self.fn(*args) + ', ' + self.fn(*args)
+            return f'{self.fn(*args)}, {self.fn(*args)}'
 
         def __get__(self, obj, cls=None):
-            if not obj:
-                # Decorating an unbound function
-                return self
-            else:
-                # Decorating a bound method
-                return functools.partial(self, obj)
+            return functools.partial(self, obj) if obj else self
 
     @doubleit
     def foo(self):
@@ -90,7 +82,7 @@ class AboutDecoratingWithClasses(Koan):
                 return fn(*args)
 
             if fn.__doc__:
-                decorated_function.__doc__ = fn.__doc__ + ": " + self.fn_doc
+                decorated_function.__doc__ = f"{fn.__doc__}: {self.fn_doc}"
             else:
                 decorated_function.__doc__ = self.fn_doc
             return decorated_function
@@ -98,10 +90,7 @@ class AboutDecoratingWithClasses(Koan):
     @documenter("Increments a value by one. Kind of.")
     def count_badly(self, num):
         num += 1
-        if num==3:
-            return 5
-        else:
-            return num
+        return 5 if num==3 else num
     @documenter("Does nothing")
     def idler(self, num):
         "Idler"

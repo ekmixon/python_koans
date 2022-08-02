@@ -6,10 +6,7 @@ from runner.koan import *
 
 class AboutTrueAndFalse(Koan):
     def truth_value(self, condition):
-        if condition:
-            return 'true stuff'
-        else:
-            return 'false stuff'
+        return 'true stuff' if condition else 'false stuff'
 
     def test_true_is_treated_as_true(self):
         self.assertEqual(__, self.truth_value(True))

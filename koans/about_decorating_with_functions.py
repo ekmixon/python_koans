@@ -5,9 +5,9 @@ from runner.koan import *
 
 
 class AboutDecoratingWithFunctions(Koan):
-    def addcowbell(fn):
-        fn.wow_factor = 'COWBELL BABY!'
-        return fn
+    def addcowbell(self):
+        self.wow_factor = 'COWBELL BABY!'
+        return self
 
     @addcowbell
     def mediocre_song(self):
@@ -21,7 +21,8 @@ class AboutDecoratingWithFunctions(Koan):
 
     def xmltag(fn):
         def func(*args):
-            return '<' + fn(*args) + '/>'
+            return f'<{fn(*args)}/>'
+
         return func
 
     @xmltag

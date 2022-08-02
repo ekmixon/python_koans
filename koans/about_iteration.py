@@ -8,10 +8,7 @@ class AboutIteration(Koan):
     def test_iterators_are_a_type(self):
         it = iter(range(1,6))
 
-        total = 0
-
-        for num in it:
-            total += num
+        total = sum(it)
 
         self.assertEqual(__ , total)
 
@@ -35,18 +32,11 @@ class AboutIteration(Koan):
 
     def test_map_transforms_elements_of_a_list(self):
         seq = [1, 2, 3]
-        mapped_seq = list()
-
         mapping = map(self.add_ten, seq)
 
         self.assertNotEqual(list, mapping.__class__)
         self.assertEqual(__, mapping.__class__)
-        # In Python 3 built in iterator funcs return iterable view objects
-        # instead of lists
-
-        for item in mapping:
-            mapped_seq.append(item)
-
+        mapped_seq = list(mapping)
         self.assertEqual(__, mapped_seq)
 
         # Note, iterator methods actually return objects of iter type in
@@ -57,7 +47,7 @@ class AboutIteration(Koan):
             return (item % 2) == 0
 
         seq = [1, 2, 3, 4, 5, 6]
-        even_numbers = list()
+        even_numbers = []
 
         for item in filter(is_even, seq):
             even_numbers.append(item)
@@ -76,7 +66,6 @@ class AboutIteration(Koan):
 
         try:
             next(iterator)
-            pass
         except StopIteration:
             msg = 'Ran out of big names'
 
@@ -126,7 +115,6 @@ class AboutIteration(Koan):
         def make_upcase(line):
             return line.strip().title()
 
-        file = open("example_file.txt")
-        upcase_lines = map(make_upcase, file.readlines())
-        self.assertEqual(__, list(upcase_lines))
-        file.close()
+        with open("example_file.txt") as file:
+            upcase_lines = map(make_upcase, file.readlines())
+            self.assertEqual(__, list(upcase_lines))
